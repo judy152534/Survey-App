@@ -29,10 +29,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var question = [
-      'Who are you?',
-      'Where do you from?',
-      'When is your birthday?',
+    var questions = [
+      {
+        'questions': 'Who are you?',
+        'answers': ['Max', 'Min', 'Mod'],
+      },
+      {
+        'questions': 'Where do you from?',
+        'answers': ['Mars', 'Earth', 'Pluto'],
+      },
+      {
+        'questions': 'What\'s your favorite color?',
+        'answers': ['Black', 'Green', 'Yello'],
+      },
     ];
 
     return MaterialApp(
@@ -43,11 +52,12 @@ class _MyAppState extends State<MyApp> {
         // Column():Above or below, invisible widget
         body: Column(
           children: [
-            Question(question[_questionIndex]),
+            Question(questions[_questionIndex]['questions'] as String),
             //Name of function, rather than result; otherwise execute when button built
-            Answer(answerQuestion),
-            Answer(answerQuestion),
-            Answer(answerQuestion),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(answerQuestion, answer);
+            }).toList()
           ],
         ),
       ),
